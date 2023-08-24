@@ -1,6 +1,18 @@
-FROM debian:buster
+FROM alpine:3.17.5
 
-RUN apt-get update && apt-get install -y && apt-get install -y mariadb-server
+RUN apk update && apk add mariadb mariadb-server
 
-COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
+# FROM debian:buster
+
+# RUN apt-get update && apt-get install -y mariadb-server
+
+# COPY tool/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+
+# COPY tool/mariaDb.sh /mariaDb.sh
+
+# RUN chmod +x /mariaDb.sh
+
+# EXPOSE 3306
+
+# CMD ["/mariaDb.sh"]
