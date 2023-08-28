@@ -1,21 +1,68 @@
 #!/bin/bash
 
-service mysql start
+# Start OpenRC
+openrc
 
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
+# create a file to indicate that the system is running in the OpenRC init system
+touch /run/openrc/softlevel
+# Initialize MariaDB
+/etc/init.d/mariadb setup
 
-mysql -e "CREATE USER IF NOT EXISTS \`${DB_USER}\`@'localhost' IDENTIFIED BY '${DB_PASS}';"
+# Start MariaDB service
+# rc-service mariadb start
+/etc/init.d/mariadb start
 
-mysql -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${DB_USER}\`@'localhost' IDENTIFIED BY '${USER_PASS}';"
+# Create SQL statements file
+cat << EOF > mariaDb.sql
+CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${USER_PASS}';
+GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${ROOT_PASS}';
+FLUSH PRIVILEGES;
+EOF
 
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${ROOT_PASS}';"
+# Run SQL commands
+mysql < mariaDb.sql
 
-mysql -e "FLUSH PRIVILEGES;"
+# Stop MariaDB service
+# rc-service mariadb stop
+/etc/init.d/mariadb stop
 
-mysqladmin -u root -p $ROOT_PASS shutdown
+# Start MariaDB service for foreground
+# exec mysqld --user=root 
+mysqld_safe
 
-exec mysqld_safe
+#===================================================================================================
+# #!/bin/bash
 
-# kill $(cat /var/run/mysqld/mysqld.pid)
+# # rc-service mariadb status
 
-# service mysql start
+# openrc
+
+# touch /run/openrc/softlevel
+
+# /etc/init.d/mariadb setup
+
+# rc-service mariadb start
+
+# echo "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" > mariaDb.sql
+
+# echo "CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${USER_PASS}';" >> mariaDb.sql
+
+# echo "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';" >> mariaDb.sql
+
+# echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${ROOT_PASS}';" >> mariaDb.sql
+
+# echo "FLUSH PRIVILEGES;" >> mariaDb.sql
+
+# # mysql -e "FLUSH PRIVILEGES;" --password="1234"
+
+# mysql < mariaDb.sql
+
+# rc-service mariadb stop
+
+# # rc-service mariadb status
+
+# # mysql 
+
+# mysql_safe mysqld &
