@@ -3,7 +3,8 @@
 mkdir -p /run/mysqld
 
 # set permissions
-chmod 777 /run/mysqld
+chown -R mysql:mysql /run/mysqld
+
 if [ ! -d "/var/lib/mysql/mysql" ]; then
 
     mysql_install_db #> /dev/null 2>&1

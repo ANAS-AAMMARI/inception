@@ -6,7 +6,7 @@ if [ ! -d "/run/mysqld" ]; then
 fi
 
 # set permissions
-chmod 777 /run/mysqld
+chown -R mysql:mysql /run/mysqld
 
 # Start MariaDB service for background
 mysql_install_db 2> /dev/null 
@@ -27,4 +27,4 @@ mysqld --init-file /tmp/mariaDb.sql 2> /dev/null
 # Start MariaDB service for foreground
 echo "starting mariadb server..."
 exec mysqld --user=root 2> /dev/null
-# mysqld_safe 
+
