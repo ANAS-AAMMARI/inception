@@ -2,6 +2,8 @@
 
 mkdir -p /run/mysqld
 
+# set permissions
+chmod 777 /run/mysqld
 if [ ! -d "/var/lib/mysql/mysql" ]; then
 
     mysql_install_db #> /dev/null 2>&1
@@ -18,9 +20,9 @@ CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED by '$DB_PASS';
 GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';
 FLUSH PRIVILEGES;
 EOF
-    # echo "create user for wordpress..."
-    # mysqld  --init-file /tmp/init_database.sql 2> /dev/null
-    # rm -rf /tmp/init_database.sql
+    echo "create user for wordpress..."
+    mysqld  --init-file /tmp/init_database.sql 2> /dev/null
+    rm -rf /tmp/init_database.sql
 fi
 
 echo "starting mariadb server..."

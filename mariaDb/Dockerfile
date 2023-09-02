@@ -6,7 +6,7 @@
 #    By: aaammari <aaammari@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 09:48:51 by aaammari          #+#    #+#              #
-#    Updated: 2023/08/28 09:26:45 by aaammari         ###   ########.fr        #
+#    Updated: 2023/09/02 15:54:55 by aaammari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,3 +26,4 @@ COPY tool/mariaDb.sh /mariaDb.sh
 EXPOSE 3306
 
 CMD ["/bin/sh", "/mariaDb.sh"]
+# CMD ["/bin/sh", "/test.sh"]
