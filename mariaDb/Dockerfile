@@ -6,7 +6,7 @@
 #    By: aaammari <aaammari@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 09:48:51 by aaammari          #+#    #+#              #
-#    Updated: 2023/09/02 16:30:38 by aaammari         ###   ########.fr        #
+#    Updated: 2023/09/02 16:33:07 by aaammari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ COPY tool/50-server.cnf /etc/my.cnf.d/50-server.cnf
 
 COPY tool/mariaDb.sh /mariaDb.sh
 # COPY tool/test.sh /test.sh
-
 
 EXPOSE 3306
 

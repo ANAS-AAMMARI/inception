@@ -25,6 +25,5 @@ mysqld --init-file /tmp/mariaDb.sql 2> /dev/null
 
 
 # Start MariaDB service for foreground
-echo "starting mariadb server..."
 exec mysqld --user=root 2> /dev/null
 
