@@ -1,27 +1,23 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Dockerfile                                         :+:      :+:    :+:    #
+#    dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: aaammari <aaammari@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/08/25 09:48:51 by aaammari          #+#    #+#              #
-#    Updated: 2023/09/07 09:24:14 by aaammari         ###   ########.fr        #
+#    Created: 2023/08/26 10:29:57 by aaammari          #+#    #+#              #
+#    Updated: 2023/08/27 11:57:37 by aaammari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM alpine:3.17
+FROM debian:bullseye
 
-RUN apk update && apk add mariadb mariadb-client
+RUN apt-get update && apt-get upgrade -y && apt-get install -y mariadb-server 
 
-# RUN mkdir -p /var/lib/mysql
+COPY ./tool/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY tools/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
-
-COPY tools/mariaDb.sh /mariaDb.sh
-# COPY tool/test.sh /test.sh
+COPY ./tool/mariadb.sh /tmp/mariadb.sh
 
 EXPOSE 3306
 
-CMD ["/bin/sh", "/mariaDb.sh"]
-# CMD ["/bin/sh", "/test.sh"]
+CMD ["/bin/sh", "/tmp/mariadb.sh"]

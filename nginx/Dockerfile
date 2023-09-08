@@ -6,7 +6,7 @@
 #    By: aaammari <aaammari@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/03 11:47:37 by aaammari          #+#    #+#              #
-#    Updated: 2023/09/05 10:30:49 by aaammari         ###   ########.fr        #
+#    Updated: 2023/09/07 16:58:47 by aaammari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.17
 
 RUN apk update && apk --no-cache add nginx && apk add openssl 
 
-RUN mkdir -p /run/nginx
+RUN mkdir -p /var/run/nginx
 
 RUN mkdir -p /etc/nginx/ssl
 
@@ -24,7 +24,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/nginx.key \
     -out /etc/nginx/ssl/nginx.crt
 
-COPY ./tools/nginx.conf /etc/nginx/conf.d/nginx.conf
+COPY ./tools/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 443
 
