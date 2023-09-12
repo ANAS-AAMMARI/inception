@@ -7,7 +7,7 @@ wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 
 # move it to path
-sudo mv wp-cli.phar /usr/local/bin/wp
+mv wp-cli.phar /usr/local/bin/wp
 
 # install wordpress
 wp core download --path=wordpress
@@ -20,7 +20,7 @@ wp config create --allow-root \
     --dbhost=mariadb:3306 \
     --path=/var/www/wordpress
 
-# install wordpress
+# create admin user for wordpress
 wp core install --allow-root \
     --url=$WP_URL \
     --title=$WP_TITLE \
@@ -29,7 +29,7 @@ wp core install --allow-root \
     --admin_email=$WP_ADMIN_EMAIL \
     --path=/var/www/wordpress
 
-# create user for wordpress
+# create normal user for wordpress
 wp user create --allow-root \
     $WP_USER \
     $WP_USER_EMAIL \
