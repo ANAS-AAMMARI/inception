@@ -2,8 +2,7 @@ version: '3.8'
 services:
   mariadb:
     container_name: mariadb
-    build: ./requirements/mariadb
-    dockerfile: Dockerfile
+    build: /home/aaammari/Desktop/inception/srcs/requirements/mariaDb
     env_file:
       - .env
     expose:
@@ -16,9 +15,6 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx
-    dockerfile: Dockerfile
-    env_file:
-      - .env
     ports:
       - 443:443
     volumes:
@@ -31,11 +27,10 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
-    dockerfile: Dockerfile
     env_file:
       - .env
     volumes:
-      - ./src:/var/www/html
+      - wordpress:/var/www/html
     depends_on:
       - mariadb
     expose:
@@ -48,13 +43,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/mariadb
+      device: /home/aaammari/data/mariadb
       o: bind
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/wordpress
+      device: /home/aaammari/data/wordpress
       o: bind
 networks:
   inception:
