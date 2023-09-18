@@ -6,7 +6,7 @@
 #    By: aaammari <aaammari@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/03 11:47:37 by aaammari          #+#    #+#              #
-#    Updated: 2023/09/14 12:29:49 by aaammari         ###   ########.fr        #
+#    Updated: 2023/09/18 13:24:36 by aaammari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,10 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/nginx.key \
     -out /etc/nginx/ssl/nginx.crt
 
+COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+
+# COPY ./html /var/www/html
 
 EXPOSE 443
 

@@ -10,47 +10,43 @@ chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 # install wordpress
-wp core download --path=/var/www --allow-root
+# wp core download --path=/var/www --allow-root
 
-cat << EOF > /var/www/wp-config.php
-<?php
-define( 'DB_NAME', '$DB_NAME' );
-define( 'DB_USER', '$DB_USER' );
-define( 'DB_PASSWORD', '$USER_PASS' );
-define( 'DB_HOST', 'mariadb:3306' );
-define( 'DB_CHARSET', 'utf8' );
-define( 'DB_COLLATE', '' );
-define('FS_METHOD','direct');
-\$table_prefix = '';
-define( 'WP_DEBUG', false );
-if ( ! defined( 'ABSPATH' ) ) {
-define( 'ABSPATH', __DIR__ . '/' );}
-require_once ABSPATH . 'wp-settings.php';
-EOF
+# download wordpress
+wget https://wordpress.org/latest.tar.gz
+
+# extract wordpress
+tar -xvf latest.tar.gz
+
+# move wordpress to /var/www/html
+mv wordpress/* /var/www/html
+rm -rf wordpress
+rm -rf latest.tar.gz
+
 
 # create wp-config.php
-# wp core config --allow-root \
-#     --dbname=$DB_NAME \
-#     --dbuser=$DB_USER \
-#     --dbpass=$DB_PASS \
-#     --dbhost=mariadb:3306 \
-#     --path=/var/www
+wp config create --allow-root \
+    --dbname=$DB_NAME \
+    --dbuser=$DB_USER \
+    --dbpass=$USER_PASS \
+    --dbhost=mariadb:3306 --skip-check \
+    --path=/var/www/html
 
 # # create admin user for wordpress
 wp core install --allow-root \
     --url=$WP_URL \
     --title=$WP_TITLE \
     --admin_user=$WP_ADMIN_USER \
-    --admin_password=$WP_ADMIN_PASSWORD \
+    --admin_password=$WP_ADMIN_PASS\
     --admin_email=$WP_ADMIN_EMAIL \
-    --path=/var/www
+    --path=/var/www/html
 
 # # create normal user for wordpress
 wp user create --allow-root \
     $WP_USER \
     $WP_USER_EMAIL \
-    --user_pass=$WP_USER_PASSWORD \
+    --user_pass=$WP_USER_PASS \
     --role=author \
-    --path=/var/www
+    --path=/var/www/html
 
 php-fpm81 -F
