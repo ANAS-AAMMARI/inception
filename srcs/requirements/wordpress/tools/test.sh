@@ -29,7 +29,7 @@ wp core install --allow-root \
 wp user create --allow-root \
     $WP_USER \
     $WP_USER_EMAIL \
-    --role=author 
-    # --user_pass=$WP_USER_PASSWORD \
+    --role=author \
+    --user_pass=$WP_USER_PASS 
 
 php-fpm81 -F

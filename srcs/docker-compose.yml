@@ -2,7 +2,7 @@ version: '3.8'
 services:
   mariadb:
     container_name: mariadb
-    build: /home/aaammari/Desktop/inception/srcs/requirements/mariaDb
+    build: ./requirements/mariaDb
     env_file:
       - .env
     expose:
@@ -43,13 +43,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/aaammari/data/mariadb
+      device: /Users/aaammari/Desktop/db
       o: bind
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/aaammari/data/wordpress
+      device: /Users/aaammari/Desktop/wp
       o: bind
 networks:
   inception:
